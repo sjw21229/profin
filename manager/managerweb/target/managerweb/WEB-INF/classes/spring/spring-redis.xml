@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+">
+    <!--配置poolConfig-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+
+    </bean>
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+        <constructor-arg name="nodes">
+            <set>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9001" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9002" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9003" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9004" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9005" />
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="106.12.210.85"/>
+                    <constructor-arg name="port" value="9006" />
+                </bean>
+            </set>
+        </constructor-arg>
+        <constructor-arg name="poolConfig" ref="poolConfig"></constructor-arg>
+    </bean>
+    <!--将jedisClientCluster交给IoC容器管理-->
+    <bean id="jedisClientCluster" class="com.qf.manager.service.impl.JedisClientCluster">
+        <property name="jedisCluster" ref="jedisCluster"/>
+    </bean>
+</beans>
